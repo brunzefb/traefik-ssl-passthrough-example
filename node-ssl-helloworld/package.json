@@ -1,0 +1,16 @@
+{
+  "name": "docker-ss-hello-world",
+  "private": true,
+  "version": "0.0.2",
+  "description": "Node.js Hello World app on Debian using docker",
+  "author": "Friedrich.Brunzema <brunzefb@gmail.com>",
+  "dependencies": {
+    "express": "*",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node ./index.js"
+  }
+}
