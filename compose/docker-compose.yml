@@ -1,0 +1,41 @@
+version: "3"
+services:
+  ssl-helloworld:
+    container_name: ssl-helloworld
+    image: ssl-helloworld:latest
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    # enabling this will make things ssl work, but the traffic is not going through traefik then    
+    # ports:
+    #   - "8888:8888"
+    networks:
+      - webnet
+    labels:
+    - traefik.backend=ssl-helloworld
+    - traefik.frontend.rule=Host:demo.local
+    - traefik.docker.network=webnet
+    - traefik.port=8888
+
+  traefik:
+    container_name: traefik
+    image: traefik:v2.0.0-alpha6
+    restart: always
+    ports:
+      - "8888:8888"
+   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.toml:/traefik.toml
+      - /tmp:/tmp   # for logging
+      
+    networks:
+      - webnet    
+networks:
+  webnet:
+    external : true

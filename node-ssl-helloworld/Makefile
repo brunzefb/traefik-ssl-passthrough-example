@@ -1,19 +1,19 @@
-NAME ?= node-hello
+NAME ?= ssl-helloworld
 
 install:
 	npm install
 
 build:
-	docker build -t $(NAME) .
+	docker build -t $(NAME):latest .
 
 bash: build
 	docker run -it --rm --entrypoint /bin/bash $(NAME)
 
 run: build
-	docker run -i -t -p 43567:8080 -d $(NAME)
+	docker run -i -t -p 8888:8888  -d $(NAME):latest
 
 test:
-	curl localhost:43567
+	curl -iv https://demo.local:8888/helloworld
 
 clean:
 	rm -rf node_modules
