@@ -26,6 +26,23 @@ logLevel = "DEBUG"
       [tcp.routers.to-ssl-helloworld.tls]
         passthrough = true 
 
+[https]
+  [https.routers]
+    [https.routers.ssl-helloworld]
+      rule = "Host(`demo.local`)"       
+      service = "ssl-helloworld"
+
+[[tls]]
+  [tls.certificate]
+    certFile = "/tmp/server.crt"
+    keyFile  = "/tmp/server.key"
+
+[tlsStores]
+  [tlsStores.default]
+    [tlsStores.default.defaultCertificate]
+      certFile = "/tmp/server.crt"
+      keyFile  = "/tmp/server.key"
+
 [api]
   entryPoint = "traefik"
   dashboard = true
